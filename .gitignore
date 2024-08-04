@@ -2,3 +2,6 @@ __pycache__
 backup.txt
 test.py
 test_app.py
+templates/test_download.html
+templates/test_index.html
+static/css/test_style.css
