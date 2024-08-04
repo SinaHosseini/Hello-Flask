@@ -70,7 +70,7 @@ def login():
             login_model.password.encode("utf-8"), result.password.encode("utf-8")
         ):
             print("Welcome, you are logged in")
-            return redirect(url_for("upload"))
+            return render_template("index.html")
         else:
             print("Username or password is incorrect")
             return redirect(url_for("login"))
@@ -97,12 +97,14 @@ def register():
         except:
             print("type error")
             return redirect(url_for("register"))
-        
+
         if register_data.password != register_data.confirm_password:
             print("Passwords do not match")
             return redirect(url_for("register"))
 
-        hashed_password = bcrypt.hashpw(register_data.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(
+            register_data.password.encode("utf-8"), bcrypt.gensalt()
+        )
 
         with Session(engine) as db_session:
             statement = select(User).where(User.username == register_data.username)
@@ -118,7 +120,7 @@ def register():
                     age=register_data.age,
                     country=register_data.country,
                     city=register_data.city,
-                    password=hashed_password.decode('utf-8'),
+                    password=hashed_password.decode("utf-8"),
                     join_time=str(datetime.now()),
                 )
 
